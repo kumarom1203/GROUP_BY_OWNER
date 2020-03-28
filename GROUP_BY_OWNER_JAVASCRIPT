@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+    </style>
+ 
+</head>
+<body>
+<script type="text/javascript">
+var data = '[{"id":1,"user_id":"1","name":"CTO"},{"id":2,"user_id":"2","name":"CTO"},{"id":3,"user_id":"3","name":"CEO"},{"id":4,"user_id":"1","name":"CEO"},{"id":5,"user_id":"1","name":"HR"},{"id":6,"user_id":"2","name":"CEO"}]';
+var main = JSON.parse(data);
+
+
+
+
+function groupByOne(key, array) {
+    var result = [];
+    for (var i = 0; i < array.length; i++) {
+        var added = false;
+        for (var j = 0; j < result.length; j++) {
+
+            if (result[j][key] == array[i][key]) {
+
+                result[j].items.push(array[i]);
+                added = true;
+                break;
+            }
+        }
+        if (!added) {
+            var entry = {
+                items: []
+            };
+            entry[key] = array[i][key];
+            entry.items.push(array[i]);
+            result.push(entry);
+        }
+    }
+    return result;
+}
+
+var res = groupByOne("user_id", main);
+
+console.log(res);
+
+var groupBy = function(xs, key) {
+    return xs.reduce(function(rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
+
+console.log(groupBy(main, 'user_id'));     
+	 
+
+	  
+</script>
+</body>
+</html>
